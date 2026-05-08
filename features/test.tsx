@@ -1,5 +1,5 @@
 export const TestComponent = () => {
     return (
-        <div>Hello test component</div>
+        <div className="text-red-500 font-semibold">Hello test component!</div>
     )
 }
