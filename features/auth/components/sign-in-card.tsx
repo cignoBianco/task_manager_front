@@ -20,9 +20,14 @@ import {
 } from "@/components/ui/field"
 import Link from 'next/link';
 import { loginSchema } from '../schemas';
+import { useLogin } from "../api/use-login";
+import { useRouter } from 'next/navigation';
 
 
 export const SignInCard = () => {
+    const router = useRouter();
+    const loginMutation = useLogin();
+
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -31,8 +36,17 @@ export const SignInCard = () => {
         }
     });
 
-    const onSubmit = (data: z.infer<typeof loginSchema>) => {
+    const onSubmit = async (data: z.infer<typeof loginSchema>) => {
         console.log(data)
+
+        try {
+            await loginMutation.mutateAsync(data);
+
+            router.push("/");
+        } catch (error) {
+            console.error("Ошибка авторизации:", error);
+            // Todo: show toast
+        }
     }
 
     return (

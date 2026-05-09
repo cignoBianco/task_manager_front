@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/field"
 import Link from 'next/link';
 import { signupSchema } from '../schemas';
+import { api } from '@/lib/api';
+import router from 'next/router';
+import axios from 'axios';
 
 export const SignUpCard = () => {
     const form = useForm<z.infer<typeof signupSchema>>({
@@ -32,8 +35,36 @@ export const SignUpCard = () => {
         }
     });
 
-    const onSubmit = (data: z.infer<typeof signupSchema>) => {
+    const onSubmit = async (data: z.infer<typeof signupSchema>) => {
         console.log(data)
+
+        try {
+            const response = await api.post("/auth/register/", {
+                email: data.email,
+                password: data.password,
+                confirm_password: data.password,
+                first_name: data.name,
+                last_name: "test",
+                phone_number: ""
+            });
+
+            console.log(response);
+
+            router.push("/sign-in");
+        } catch (error) {
+            console.error("Ошибка регистрации:", error);
+            // todo: show toast
+
+            if (axios.isAxiosError(error)) {
+                console.log("Axios error detected");
+
+                const detail = error.response?.data?.detail;
+
+                if (detail) {
+                    console.error("FastAPI detail:", detail);
+                }
+            }
+        }
     }
 
     return (
