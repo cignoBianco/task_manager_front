@@ -10,46 +10,26 @@ interface EngineeringRole {
 
 const MyNextFastAPIApp = () => {
     const searchParams = useSearchParams();
-    //  ?title=developer
     const title = searchParams.get('title') || '';
-
-    const [role, setRole] = useState<EngineeringRole | null>(null);
-    const [loading, setLoading] = useState<boolean>(() => !!title);
-    const [error, setError] = useState<string>("");
+    const [data, setData] = useState<EngineeringRole | null>(null);
+    const [loading, setLoading] = useState(() => !!title);
 
     useEffect(() => {
-        if (!title) {
-            return;
-        }
-
-        async function loadData() {
-            setError("");
-            setLoading(true);
-            try {
-                const response = await fetch(`/api/engineering_roles?title=${encodeURIComponent(title)}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setRole(data);
-                } else {
-                    const errorData = await response.json().catch(() => null);
-                    const errorMessage = errorData?.detail || errorData?.error || errorData?.message || `Ошибка сервера: ${response.status}`;
-                    setError(errorMessage);
-                }
-            } catch (error) {
-                console.error("Error fetching:", error);
-            } finally {
+        fetch(`/api/engineering_roles?title=${encodeURIComponent(title)}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data);
                 setLoading(false);
-            }
-        }
+            });
+    }, []);
 
-        loadData();
-    }, [title]);
-
-    if (loading) return <div>Загрузка...</div>;
-    if (!role) return <div>{error || "Роль не найдена или не указан параметр title"}</div>;
+    if (loading) return <p>Loading...</p>;
 
     return (
-        <div>{`Роль: ${role.title}, навык: ${role.mainskill}.`}</div>
+        <div>
+            <h1>Data from API</h1>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
     );
 };
 
