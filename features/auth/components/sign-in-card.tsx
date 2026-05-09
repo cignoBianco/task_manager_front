@@ -19,24 +19,19 @@ import {
     FieldGroup
 } from "@/components/ui/field"
 import Link from 'next/link';
+import { loginSchema } from '../schemas';
 
-const formSchema = z.object({
-    email: z.email("Поле обязательно для заполнения"),
-    password: z.string()
-        .min(5, "Пароль должен состоять минимум из 5 символов")
-        .max(32, "Допустимо максимум 32 символа"),
-});
 
 export const SignInCard = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof loginSchema>>({
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
             password: ""
         }
     });
 
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const onSubmit = (data: z.infer<typeof loginSchema>) => {
         console.log(data)
     }
 
