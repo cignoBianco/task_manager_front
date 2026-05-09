@@ -1,20 +1,21 @@
-import Image from "next/image";
+// import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { TestComponent } from '@/features/test';
 
 export default function Home() {
   return (
-    <div>
-      <Button
-        variant={"destructive"}
-        size={"sm"}
-      >
-        Click me
+    <div className="">
+      <Button>
+        Primary
       </Button>
-      <TestComponent />
-      <p className="text-red-500 font-semibold">
-        AnA
-      </p>
+      <Button variant={"secondary"}>
+        Secondary
+      </Button>
+      <Button variant={"destructive"}>Destructive</Button>
+      <Button variant={"ghost"}>Ghost</Button>
+      <Button variant={"link"}>Link</Button>
+      <Button variant={"outline"}>Outline</Button>
+      <Button variant={"mutual"}>Mutual</Button>
+      <Button variant={"tertiary"}>Tertiary</Button>
     </div>
   );
 }
