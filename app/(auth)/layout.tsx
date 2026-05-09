@@ -20,7 +20,7 @@ const AuthLayout = ({ children }: AuthLayoutPropd) => {
                     <div className='flex items-center gap-2'>
                         <Button asChild variant={"secondary"}>
                             <Link href={isSignIn ? "/sign-up" : "/sign-in"}>
-                                {isSignIn ? "Sign Up" : "Sign In"}
+                                {isSignIn ? "Регистрация" : "Войти"}
                             </Link>
                         </Button>
                     </div>

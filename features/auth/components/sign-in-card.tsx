@@ -18,6 +18,7 @@ import {
     FieldError,
     FieldGroup
 } from "@/components/ui/field"
+import Link from 'next/link';
 
 const formSchema = z.object({
     email: z.email("Поле обязательно для заполнения"),
@@ -93,7 +94,7 @@ export const SignInCard = () => {
             <div className="px-7">
                 <DottedSeparator />
             </div>
-            <CardContent className='p-7 pt-2 flex flex-col gap-y-4'>
+            <CardContent className='p-7 pt-2 pb-3 flex flex-col gap-y-4'>
                 <Button disabled={false} variant={"secondary"} size="lg" className='w-full' >
                     <FcGoogle className='mr-2 size-5' />
                     Login with Google
@@ -102,6 +103,17 @@ export const SignInCard = () => {
                     <FaGithub className='mr-2 size-5' />
                     Login with Github
                 </Button>
+            </CardContent>
+            <div className="px-7">
+                <DottedSeparator />
+            </div>
+            <CardContent className='p-7 pt-2 flex items-center justify-center'>
+                <p>
+                    Нет аккаунта?
+                    {" "}
+                    <Link className='text-blue-700' href="/sign-up"> Зарегистрироваться
+                    </Link>
+                </p>
             </CardContent>
         </Card>
     );
